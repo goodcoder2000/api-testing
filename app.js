@@ -4,6 +4,9 @@ const app = express();
 const MongoClient = require('mongodb').MongoClient;
 
 app.use(express.json());
+app.use(cors({
+    "origin": "*"
+}));
 
 app.listen(process.env.PORT || 3000, () =>{
     console.log('server is running')
