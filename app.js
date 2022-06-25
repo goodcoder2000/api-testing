@@ -2,11 +2,15 @@ const express = require('express');
 const { ObjectId } = require('mongodb');
 const app = express();
 const MongoClient = require('mongodb').MongoClient;
+const cors = require('cors');
 
 app.use(express.json());
 app.use(cors({
-    "origin": "*"
-}));
+    "origin": "*",
+    "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+    "preflightContinue": false,
+    "optionsSuccessStatus": 204
+  }));
 
 app.listen(process.env.PORT || 3000, () =>{
     console.log('server is running')
