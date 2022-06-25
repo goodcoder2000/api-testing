@@ -38,3 +38,48 @@ app.post('/users', (req,res) =>{
         res.status(201).json(result);
     })
 })
+
+app.patch('/users/:id/:method', (req, res) =>{
+    const method = req.params.method;
+    const userId = req.params.id;
+    const data = req.body;
+    if("push" === method){
+        db.collection('users').updateOne({_id: ObjectId(userId)}, {$addToSet: {comment: data}})
+        .then((result) =>{
+            res.status(201).json(result)
+        })
+    } else if("pull" === method){
+        db.collection('users').updateOne({_id: ObjectId(userId)}, {$pull: {comment: data}})
+        .then((result) =>{
+            res.status(201).json(result)
+        })
+    }
+})
+
+// for menu collection
+
+app.get('/menu', (req, res) =>{
+    db.collection('menu').find().toArray((err, result) =>{
+        if(err) throw err
+        res.status(200).json(result);
+    })
+})
+
+app.get('/menu/:id', (req, res) =>{
+    const data = req.params.id;
+    db.collection('menu').findOne({_id: ObjectId(data)})
+    .then((result) =>{
+        res.status(200).json(result);
+    })
+})
+
+app.post('/menu', (req,res) =>{
+    const data = req.body;
+    db.collection('menu').insertOne(data)
+    .then((result) =>{
+        res.status(201).json(result);
+    })
+})
+
+
+
