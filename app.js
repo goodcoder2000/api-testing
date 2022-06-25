@@ -22,6 +22,14 @@ app.get('/', (req, res) =>{
     })
 })
 
+app.get('/:id', (req,res) =>{
+    const data = req.body;
+    db.collection('users').findOne(data)
+    .then((result) =>{
+        res.status(200).json(result);
+    })
+})
+
 app.post('/', (req,res) =>{
     const data = req.body;
     db.collection('users').insertOne(data)
