@@ -1,4 +1,5 @@
 const express = require('express');
+const { ObjectId } = require('mongodb');
 const app = express();
 const MongoClient = require('mongodb').MongoClient;
 
@@ -23,8 +24,8 @@ app.get('/users', (req, res) =>{
 })
 
 app.get('/users/:id', (req,res) =>{
-    const data = req.body;
-    db.collection('users').findOne(data)
+    const userId = req.params.id;
+    db.collection('users').findOne({_id: ObjectId(userId)})
     .then((result) =>{
         res.status(200).json(result);
     })
