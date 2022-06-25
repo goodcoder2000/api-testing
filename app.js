@@ -15,14 +15,14 @@ MongoClient.connect(uri, (err, client) =>{
     db = client.db('socialapp')
 })
 
-app.get('/', (req, res) =>{
+app.get('/users', (req, res) =>{
     db.collection('users').find().toArray((err, result) =>{
         if(err) throw err
         res.status(200).json(result);
     })
 })
 
-app.get('/:id', (req,res) =>{
+app.get('/users/:id', (req,res) =>{
     const data = req.body;
     db.collection('users').findOne(data)
     .then((result) =>{
@@ -30,7 +30,7 @@ app.get('/:id', (req,res) =>{
     })
 })
 
-app.post('/', (req,res) =>{
+app.post('/users', (req,res) =>{
     const data = req.body;
     db.collection('users').insertOne(data)
     .then((result) =>{
